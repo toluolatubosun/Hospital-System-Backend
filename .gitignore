@@ -1,0 +1,6 @@
+.env
+node_modules/
+
+# exclude files in uploads
+uploads/*
+!uploads/.gitkeep
