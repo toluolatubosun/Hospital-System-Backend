@@ -22,6 +22,7 @@ app.use(express.json())
 // Route Middleware
 app.use('/api/auth', require('./routes/auth.route'));
 app.use('/api/user', require('./routes/user.route'));
+app.use('/api/patient', require('./routes/patient.route'));
 
 // Error Handling Middleware
 require("./middlewares/error.middleware")(app);

@@ -3,7 +3,7 @@ const mongoose = require('mongoose')
 const ProductSchema = new mongoose.Schema(
     {
         hospitalNumber: {
-            type: String,
+            type: Number,
             required: true
         },
         occupation: {
