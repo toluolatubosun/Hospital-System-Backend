@@ -1,12 +1,12 @@
 const router = require('express').Router()
 const Patient = require('../models/patient.model')
-const { role } = require('../config')
 
+const { role } = require('../config')
 const response = require('../utils/response')
 const CustomError = require('../utils/custom-error')
-const upload = require("./../middlewares/multer.middleware");
 
 const auth = require('../middlewares/auth.middleware')
+const upload = require("./../middlewares/multer.middleware");
 
 // Create a patient
 router.post('/', auth(role.ADMIN), upload("image"), async (req, res) => {
@@ -85,7 +85,5 @@ router.delete('/:id', auth(role.ADMIN), async (req, res) => {
 
     res.status(200).json(response('Patient deleted successfully', deletedPatient, true))
 })
-
-
 
 module.exports = router
