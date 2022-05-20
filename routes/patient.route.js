@@ -35,7 +35,7 @@ router.post('/', auth(role.ADMIN), upload("image"), async (req, res) => {
 })
 
 // Search for a patient
-router.get('/search', auth(role.ADMIN), async (req, res) => {
+router.get('/search', async (req, res) => {
     const { search } = req.query
     
     const patients = await Patient.find({
@@ -53,7 +53,7 @@ router.get('/search', auth(role.ADMIN), async (req, res) => {
 })
 
 // Get a patient
-router.get('/:id', auth(role.ADMIN), async (req, res) => {
+router.get('/:id', async (req, res) => {
     const patient = await Patient.findById(req.params.id)
     if(!patient) throw new CustomError("Patient not found", 404)
 
