@@ -19,6 +19,8 @@ app.use(
 );
 app.use(express.json())
 
+app.use("/uploads", express.static("uploads"));
+
 // Route Middleware
 app.use('/api/auth', require('./routes/auth.route'));
 app.use('/api/user', require('./routes/user.route'));

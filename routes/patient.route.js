@@ -34,28 +34,30 @@ router.post('/', auth(role.ADMIN), upload("image"), async (req, res) => {
     res.status(200).json(response('User created successfully', savedPatient, true))
 })
 
+// Search for a patient
+router.get('/search', auth(role.ADMIN), async (req, res) => {
+    const { search } = req.query
+    
+    const patients = await Patient.find({
+        $or: [
+            { hospitalNumber: parseInt(search) || 0 },
+            { surname: { $regex: search, $options: 'i' } },
+            { otherNames: { $regex: search, $options: 'i' } },
+            { phoneNumber: { $regex: search, $options: 'i' } },
+            { ward: parseInt(search) || 0 },
+        ]
+    })
+    console.log(patients, "q")
+
+    res.status(200).json(response('Patients found', patients, true))
+})
+
 // Get a patient
 router.get('/:id', auth(role.ADMIN), async (req, res) => {
     const patient = await Patient.findById(req.params.id)
     if(!patient) throw new CustomError("Patient not found", 404)
 
     res.status(200).json(response('Patient found', patient, true))
-})
-
-// Search for a patient
-router.get('/', auth(role.ADMIN), async (req, res) => {
-    const { search } = req.query
-    const patients = await Patient.find({
-        $or: [
-            { hospitalNumber: { $regex: search, $options: 'i' } },
-            { surname: { $regex: search, $options: 'i' } },
-            { otherNames: { $regex: search, $options: 'i' } },
-            { phoneNumber: { $regex: search, $options: 'i' } },
-            { ward: { $regex: search, $options: 'i' } },
-        ]
-    })
-
-    res.status(200).json(response('Patients found', patients, true))
 })
 
 // Update a Patient
